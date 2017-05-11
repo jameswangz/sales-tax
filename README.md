@@ -1,4 +1,4 @@
-** Sales-tax tdd example by James, made a small change on the original problem description(1 chocolate bar -> 2 chocolate bars). **
+Sales-tax tdd example by James, made a small change on the original problem description(1 chocolate bar -> 2 chocolate bars). 
 
 ```
 Basic sales tax is applicable at a rate of 10% on all goods, except books,
