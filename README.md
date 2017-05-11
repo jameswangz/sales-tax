@@ -1,6 +1,6 @@
-Sales-tax tdd example by James, made a small change on the original problem description(1 chocolate bar -> 2 chocolate bars).
+** Sales-tax tdd example by James, made a small change on the original problem description(1 chocolate bar -> 2 chocolate bars). **
 
-
+```
 Basic sales tax is applicable at a rate of 10% on all goods, except books,
 food, and medical products that are exempt. Import duty is an additional
 sales tax applicable on all imported goods at a rate of 5%, with no
@@ -53,4 +53,4 @@ Output 3:
 1 imported box of chocolates: 11.85
 Sales Taxes: 6.70
 Total: 74.68
-
+```
