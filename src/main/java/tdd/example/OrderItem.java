@@ -6,16 +6,14 @@ public class OrderItem {
 
 	private int count;
 	private Product product;
-	private BigDecimal price;
 
-	public OrderItem(int count, Product product, BigDecimal price) {
+	public OrderItem(int count, Product product) {
 		this.count = count;
 		this.product = product;
-		this.price = price;
 	}
 	
-	public static OrderItem of(int count, Product product, BigDecimal price) {
-		return new OrderItem(count, product, price);
+	public static OrderItem of(int count, Product product) {
+		return new OrderItem(count, product);
 	}
 
 	public int getCount() {
@@ -27,11 +25,13 @@ public class OrderItem {
 	}
 
 	public BigDecimal subtotal() {
-		return this.price.add(this.salesTax()).setScale(2, BigDecimal.ROUND_CEILING);
+		return new BigDecimal(count).multiply(product.priceWithTax()).setScale(2, BigDecimal.ROUND_CEILING);
 	}
 
 	public BigDecimal salesTax() {
-		return this.price.multiply(this.product.taxRate());
+		return new BigDecimal(count).multiply(product.salesTax());
 	}
+	
+	
 
 }

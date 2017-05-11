@@ -12,9 +12,9 @@ public class SalesTaxTest {
 	@Test
 	public void case1() {
 		Order order = new Order();
-		order.add(OrderItem.of(1, new ProductBuilder().named("book").category(ProductCategory.BOOK).build(), new BigDecimal("12.49")));
-		order.add(OrderItem.of(1, new ProductBuilder().named("music CD").category(ProductCategory.GENERAL).build(), new BigDecimal("14.99")));
-		order.add(OrderItem.of(2, new ProductBuilder().named("chocolate bar").category(ProductCategory.FOOD).build(), new BigDecimal("0.85")));
+		order.add(OrderItem.of(1, new ProductBuilder().named("book").category(ProductCategory.BOOK).price(new BigDecimal("12.49")).build()));
+		order.add(OrderItem.of(1, new ProductBuilder().named("music CD").category(ProductCategory.GENERAL).price(new BigDecimal("14.99")).build()));
+		order.add(OrderItem.of(2, new ProductBuilder().named("chocolate bar").category(ProductCategory.FOOD).price(new BigDecimal("0.85")).build()));
 		
 		Iterator<OrderItem> iterator = order.itemsIterator();
 		OrderItem item1 = iterator.next();
@@ -30,7 +30,7 @@ public class SalesTaxTest {
 		OrderItem item3 = iterator.next();
 		assertEquals(2, item3.getCount());
 		assertEquals("chocolate bar", item3.getProduct().getName());
-		assertEquals(new BigDecimal("0.85"), item3.subtotal());
+		assertEquals(new BigDecimal("1.70"), item3.subtotal());
 		
 		assertEquals(new BigDecimal("1.50"), order.salesTaxes());
 		assertEquals(new BigDecimal("30.68"), order.total());		
