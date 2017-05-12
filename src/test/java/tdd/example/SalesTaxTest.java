@@ -57,4 +57,9 @@ public class SalesTaxTest {
 		assertEquals(new BigDecimal("65.15"), order.total());	
 	}
 	
+	@Test
+	public void case3() {
+		
+	}
+	
 }
