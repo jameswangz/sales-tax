@@ -2,15 +2,9 @@ package tdd.example;
 
 import java.math.BigDecimal;
 
-public enum ProductCategory {
+public enum ProductCategory implements TaxRateStrategy {
 	
-	BOOK {
-		@Override
-		public BigDecimal taxRate() {
-			return new BigDecimal(0);
-		}
-	}, 
-	
+	BOOK , 
 	GENERAL {
 		@Override
 		public BigDecimal taxRate() {
@@ -18,14 +12,7 @@ public enum ProductCategory {
 		}
 	}, 
 	
-	FOOD {
-		@Override
-		public BigDecimal taxRate() {
-			return new BigDecimal(0);
-		}
-	};
-
-	public abstract BigDecimal taxRate();
-	
+	FOOD, 
+	MEDICAL;
 
 }
