@@ -2,7 +2,7 @@ package tdd.example;
 
 import java.math.BigDecimal;
 
-public enum ProductCategory implements TaxRateAware {
+public enum ProductCategory {
 	
 	BOOK {
 		@Override
@@ -16,7 +16,6 @@ public enum ProductCategory implements TaxRateAware {
 		public BigDecimal taxRate() {
 			return new BigDecimal(0.1);
 		}
-		
 	}, 
 	
 	FOOD {
@@ -25,5 +24,8 @@ public enum ProductCategory implements TaxRateAware {
 			return new BigDecimal(0);
 		}
 	};
+
+	public abstract BigDecimal taxRate();
+	
 
 }

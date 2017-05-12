@@ -18,7 +18,7 @@ public class Order {
 	}
 
 	public BigDecimal salesTaxes() {
-		return items.stream().map(i -> i.salesTax()).reduce(new BigDecimal(0), (a, b) -> a.add(b)).setScale(2, BigDecimal.ROUND_CEILING);
+		return RoundingHelper.roundup(items.stream().map(i -> i.salesTax()).reduce(new BigDecimal(0), (a, b) -> a.add(b)));
 	}
 
 	public BigDecimal total() {

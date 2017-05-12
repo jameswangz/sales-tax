@@ -36,4 +36,25 @@ public class SalesTaxTest {
 		assertEquals(new BigDecimal("30.68"), order.total());		
 	}
 	
+	@Test
+	public void case2() {
+		Order order = new Order();
+		order.add(OrderItem.of(1, new ProductBuilder().named("chocolates").category(ProductCategory.FOOD).imported().price(new BigDecimal("10.00")).build()));
+		order.add(OrderItem.of(1, new ProductBuilder().named("perfume").category(ProductCategory.GENERAL).imported().price(new BigDecimal("47.50")).build()));
+		
+		Iterator<OrderItem> iterator = order.itemsIterator();
+		OrderItem item1 = iterator.next();
+		assertEquals(1, item1.getCount());
+		assertEquals("chocolates", item1.getProduct().getName());
+		assertEquals(new BigDecimal("10.50"), item1.subtotal());
+		
+		OrderItem item2 = iterator.next();
+		assertEquals(1, item2.getCount());
+		assertEquals("perfume", item2.getProduct().getName());
+		assertEquals(new BigDecimal("54.65"), item2.subtotal());
+		
+		assertEquals(new BigDecimal("7.65"), order.salesTaxes());
+		assertEquals(new BigDecimal("65.15"), order.total());	
+	}
+	
 }

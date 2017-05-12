@@ -25,7 +25,7 @@ public class OrderItem {
 	}
 
 	public BigDecimal subtotal() {
-		return new BigDecimal(count).multiply(product.priceWithTax()).setScale(2, BigDecimal.ROUND_CEILING);
+		return new BigDecimal(count).multiply(product.priceWithTax()).setScale(2, BigDecimal.ROUND_HALF_UP);
 	}
 
 	public BigDecimal salesTax() {

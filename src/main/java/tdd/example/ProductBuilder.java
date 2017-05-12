@@ -7,6 +7,7 @@ public class ProductBuilder {
 	private String name;
 	private ProductCategory catetory;
 	private BigDecimal price;
+	private boolean imported;
 
 	public ProductBuilder named(String name) {
 		this.name = name;
@@ -25,7 +26,13 @@ public class ProductBuilder {
 	
 	public Product build() {
 		Product product = new Product(name, catetory, price);
+		product.setImported(imported);
 		return product;
+	}
+
+	public ProductBuilder imported() {
+		this.imported  = true;
+		return this;
 	}
 
 	
