@@ -7,6 +7,11 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
+import tdd.example.Order;
+import tdd.example.OrderItem;
+import tdd.example.ProductBuilder;
+import tdd.example.ProductCategory;
+
 public class SalesTaxTest {
 
 	@Test
@@ -17,6 +22,7 @@ public class SalesTaxTest {
 		order.add(OrderItem.of(2, new ProductBuilder().named("chocolate bar").category(ProductCategory.FOOD).price($("0.85")).build()));
 		
 		Iterator<OrderItem> iterator = order.itemsIterator();
+		
 		OrderItem item1 = iterator.next();
 		assertEquals(1, item1.getCount());
 		assertEquals("book", item1.getProduct().getName());
@@ -32,10 +38,10 @@ public class SalesTaxTest {
 		assertEquals("chocolate bar", item3.getProduct().getName());
 		assertEquals($("1.70"), item3.subtotal());
 		
-		assertEquals($("1.50"), order.salesTaxes());
-		assertEquals($("30.68"), order.total());		
+		assertEquals($("1.50"), order.salesTax());
+		assertEquals($("30.68"), order.total());
 	}
-	
+
 	private BigDecimal $(String value) {
 		return new BigDecimal(value);
 	}
@@ -43,22 +49,25 @@ public class SalesTaxTest {
 	@Test
 	public void case2() {
 		Order order = new Order();
-		order.add(OrderItem.of(1, new ProductBuilder().named("chocolates").category(ProductCategory.FOOD).imported().price($("10.00")).build()));
-		order.add(OrderItem.of(1, new ProductBuilder().named("perfume").category(ProductCategory.GENERAL).imported().price($("47.50")).build()));
+		order.add(OrderItem.of(1, new ProductBuilder().named("chocolate").imported().category(ProductCategory.FOOD).price($("10.00")).build()));
+		order.add(OrderItem.of(1, new ProductBuilder().named("perfume").imported().category(ProductCategory.GENERAL).price($("47.50")).build()));
 		
 		Iterator<OrderItem> iterator = order.itemsIterator();
+		
 		OrderItem item1 = iterator.next();
 		assertEquals(1, item1.getCount());
-		assertEquals("chocolates", item1.getProduct().getName());
+		assertEquals("chocolate", item1.getProduct().getName());
+		assertTrue(item1.getProduct().isImported());
 		assertEquals($("10.50"), item1.subtotal());
 		
 		OrderItem item2 = iterator.next();
 		assertEquals(1, item2.getCount());
 		assertEquals("perfume", item2.getProduct().getName());
+		assertTrue(item2.getProduct().isImported());
 		assertEquals($("54.65"), item2.subtotal());
 		
-		assertEquals($("7.65"), order.salesTaxes());
-		assertEquals($("65.15"), order.total());	
+		assertEquals($("7.65"), order.salesTax());
+		assertEquals($("65.15"), order.total());
 	}
 	
 	@Test
@@ -72,6 +81,7 @@ public class SalesTaxTest {
 		Iterator<OrderItem> iterator = order.itemsIterator();
 		OrderItem item1 = iterator.next();
 		assertEquals(1, item1.getCount());
+		assertTrue(item1.getProduct().isImported());
 		assertEquals("perfume", item1.getProduct().getName());
 		assertEquals($("32.19"), item1.subtotal());
 		
@@ -87,11 +97,12 @@ public class SalesTaxTest {
 		
 		OrderItem item4 = iterator.next();
 		assertEquals(1, item4.getCount());
+		assertTrue(item4.getProduct().isImported());
 		assertEquals("chocolate", item4.getProduct().getName());
 		assertEquals($("11.85"), item4.subtotal());
 		
-		assertEquals($("6.70"), order.salesTaxes());
+		assertEquals($("6.70"), order.salesTax());
 		assertEquals($("74.68"), order.total());
 	}
-	
+		
 }

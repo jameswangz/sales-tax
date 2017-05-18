@@ -5,13 +5,13 @@ import java.math.BigDecimal;
 public class Product {
 
 	private String name;
-	private ProductCategory catetory;
+	private TaxRateStrategy category;
 	private BigDecimal price;
 	private boolean imported;
 
-	public Product(String name, ProductCategory catetory, BigDecimal price) {
+	public Product(String name, ProductCategory category, BigDecimal price) {
 		this.name = name;
-		this.catetory = catetory;
+		this.category = category;
 		this.price = price;
 	}
 
@@ -19,17 +19,29 @@ public class Product {
 		return name;
 	}
 
-	public BigDecimal taxRate() {
-		BigDecimal importedTaxRate = imported ? new BigDecimal(0.05) : new BigDecimal(0);
-		return this.catetory.taxRate().add(importedTaxRate);
-	}
-
 	public BigDecimal priceWithTax() {
-		return this.price.add(salesTax());
+		return price.add(salesTax()).setScale(2, BigDecimal.ROUND_HALF_UP);
 	}
 
-	public BigDecimal salesTax() {
-		return RoundingHelper.roundup(this.price.multiply(taxRate()));	
+	BigDecimal salesTax() {
+		return round(price.multiply(taxRate()));
+	}
+
+	private BigDecimal round(BigDecimal value) {
+		double roundTo = 0.05;
+		return new BigDecimal(Math.ceil(value.doubleValue() / roundTo) * roundTo);
+	}
+
+	private BigDecimal taxRate() {
+		BigDecimal taxRate = category.taxRate();
+		if (imported) {
+			taxRate = taxRate.add(new BigDecimal("0.05"));
+		}
+		return taxRate;
+	}
+	
+	public boolean isImported() {
+		return imported;
 	}
 
 	public void setImported(boolean imported) {
